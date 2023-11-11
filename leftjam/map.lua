@@ -106,7 +106,11 @@ function LeftJam.LoadMap(name)
                 goto _cont
             end
 
-            love.graphics.setColor(1, 1, 1)
+            if v._colourTint then
+                love.graphics.setColor(v._colourTint[1], v._colourTint[2], v._colourTint[3])
+            else
+                love.graphics.setColor(1, 1, 1)
+            end
             love.graphics.draw(v.tex, math.floor(v.posX), math.floor(v.posY))
 
             ::_cont::

@@ -4,10 +4,13 @@ local function loadFile(name)
     require("leftjam." .. name)
 end
 
+
+loadFile("util")
 loadFile("ui")
 loadFile("player")
 loadFile("map")
-loadFile("render")
 loadFile("states")
 loadFile("states.game")
 loadFile("states.nextmap")
+loadFile("states.mainmenu")
+loadFile("states.credits")

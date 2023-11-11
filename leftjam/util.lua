@@ -1,5 +1,4 @@
 LeftJam = LeftJam or {}
-LeftJam.States = LeftJam.States or {}
 
 
 
@@ -57,34 +56,18 @@ end
 
 
 
-LeftJam.States[STATE_NEXT_MAP] = {}
 
-LeftJam.States[STATE_NEXT_MAP].init = function()
-    --LeftJam.LoadMap("untitled")
-    --LeftJam.InitPlayer()
-end
+function LeftJam.RenderOKLabGradient(x, y, w, h, cS, cE, steps)
+    local col_s = linear_srgb_to_oklab(cS)
+    local col_f = linear_srgb_to_oklab(cE)
+    steps = steps or 128
 
-LeftJam.States[STATE_NEXT_MAP].think = function(dt)
-    --print("Brain activation")
-    --LeftJam.PlayerThink(dt)
+    local hDiv = h / steps
+    for i = 0, steps - 1 do
+        local d = i / (steps - 1)
+        local colLerped = oklab_to_linear_srgb(lerp_oklab(d, col_s, col_f))
 
-    --LeftJam.MapThink(dt)
-    LeftJam.CamThink(dt)
-    --LeftJam.SwitchControllable(dt)
-    --LeftJam.MapEndThink(dt)
-end
-
-LeftJam.States[STATE_NEXT_MAP].render = function()
-    love.graphics.clear(.2, .3, .4)
-    love.graphics.setColor(1, 1, 1)
-    LeftJam.MapDraw()
-    LeftJam.RenderControlSphere()
-
-
-    -- make gradient
-    local w, h = love.graphics.getDimensions()
-    LeftJam.RenderOKLabGradient(0, 0, w, h, {24, 24, 24, 242.25}, {32, 128, 64}, 128)
-end
-
-LeftJam.States[STATE_NEXT_MAP].exit = function()
+        love.graphics.setColor(colLerped[1] / 255, colLerped[2] / 255, colLerped[3] / 255, (cS[4] or 242.25) / 255)
+        love.graphics.rectangle("fill", x, y + i * hDiv, w, hDiv)
+    end
 end

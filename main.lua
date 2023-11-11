@@ -11,8 +11,8 @@ function love.load()
 	love.filesystem.load("leftjam/leftjam.lua")()
 	CurTime = 0
 
-	LeftJam.LoadMap("untitled")
-	LeftJam.SetState(STATE_GAME)
+	--LeftJam.LoadMap("untitled")
+	LeftJam.SetState(STATE_MENU)
 end
 
 function love.update(dt)

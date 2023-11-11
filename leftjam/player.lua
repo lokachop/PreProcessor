@@ -348,12 +348,14 @@ local function armMove(self, dt)
             local ax, ay, cols, len = world:move(self, nx, ny)
             self.posX = ax
             self.posY = ay
+            self._colourTint = {0.5, 1, 0.5}
         else
             self.isGlued = false
             world:update(self, PHYSVOID, PHYSVOID)
 
             self.posX = nx
             self.posY = ny
+            self._colourTint = {1, 0.5, 0.5}
         end
 
 
@@ -374,6 +376,7 @@ LeftJam.NewControllable(TARGET_ARM_LEFT, {
     ["cdY"] = 12,
 
     ["physicsVoid"] = true,
+    ["_colourTint"] = {1, 1, 1},
 
     ["canMove"] = armCanMove,
     ["moveFunc"] = armMove,
@@ -393,6 +396,7 @@ LeftJam.NewControllable(TARGET_ARM_RIGHT, {
     ["cdY"] = 10,
 
     ["physicsVoid"] = true,
+    ["_colourTint"] = {1, 1, 1},
 
     ["canMove"] = armCanMove,
     ["moveFunc"] = armMove,
@@ -451,21 +455,37 @@ function LeftJam.CamThink(dt)
 
 end
 
+
+local function switchToTarget(target)
+    local curr = controllables[SELECTED_TARGET]
+    curr.controlled = false
+
+    if curr._colourTint then
+        curr._colourTint = {1, 1, 1}
+    end
+
+    SELECTED_TARGET = target
+    local new = controllables[SELECTED_TARGET]
+    new.controlled = true
+end
+
+local escToggleFlag = false
 local tabToggleFlag = false
 local fToggleFlag = false
 function LeftJam.SwitchControllable(dt)
+    local escdown = love.keyboard.isDown("escape")
+    if escdown and not escToggleFlag then
+        switchToTarget(TARGET_BODY)
+        escToggleFlag = true
+    elseif not escdown and escToggleFlag then
+        escToggleFlag = false
+    end
+
+
     local tdown = love.keyboard.isDown("tab")
     if tdown and not tabToggleFlag then
         local max = #controllables
-
-        local curr = controllables[SELECTED_TARGET]
-        curr.controlled = false
-
-        SELECTED_TARGET = ((SELECTED_TARGET + 0) % max) + 1
-
-        local new = controllables[SELECTED_TARGET]
-        new.controlled = true
-
+        switchToTarget(((SELECTED_TARGET + 0) % max) + 1)
         tabToggleFlag = true
     elseif not tdown and tabToggleFlag then
         tabToggleFlag = false
@@ -484,8 +504,6 @@ function LeftJam.SwitchControllable(dt)
                 controllables[i].isDocked = true
             end
         end
-
-
 
         fToggleFlag = true
     elseif not fdown and fToggleFlag then
