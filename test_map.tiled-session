@@ -7,16 +7,56 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "dev_assets/dev_tiles.tsx": {
             "dynamicWrapping": true,
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "maps/min_preset.tmx": {
+            "scale": 0.8349609375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "maps/shit.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 1,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 112,
+                "y": 61
+            }
+        },
+        "maps/shit.tmx#dev_tiles": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/untitled.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 852.6666666666665,
+                "y": 375.33333333333337
+            }
+        },
         "maps/untitled.tmx#dev_tiles": {
-            "dynamicWrapping": true
+            "dynamicWrapping": true,
+            "scaleInDock": 1
         }
     },
     "last.exportedFilePath": "C:/coding/lua/love2d/leftjam/maps",
+    "last.externalTilesetPath": "C:/coding/lua/love2d/leftjam/dev_assets",
     "last.imagePath": "C:/coding/lua/love2d/leftjam/dev_assets",
     "map.fixedSize": false,
     "map.lastUsedExportFilter": "Lua files (*.lua)",
@@ -26,8 +66,10 @@
     "project": "test_map.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "dev_assets/dev_tiles.tsx"
+        "dev_assets/dev_tiles.tsx",
+        "maps/min_preset.tmx"
     ],
+    "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",
     "tileset.type": 1
 }

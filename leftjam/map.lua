@@ -2,7 +2,7 @@ LeftJam = LeftJam or {}
 local sti = require("sti")
 local bump = require("bump")
 
-
+LeftJam.CurrMapName = nil
 LeftJam.CurrMap = nil
 LeftJam.EntLayer = nil
 LeftJam.BumpWorld = nil
@@ -28,12 +28,57 @@ local mapObjectTypes = {
     end
 }
 
+local function inrange(a, min, max)
+    return (a >= min) and (a <= max)
+end
+
+local function inrange2D(x, y, minX, minY, maxX, maxY)
+    return inrange(x, minX, maxX) and inrange(y, minY, maxY)
+end
+
+local mapTree = {
+    ["untitled"] = "shit"
+}
+
+
+
+-- setup UI for next map
+
+local triggeredMaps = {}
+
 function LeftJam.MapEndThink(dt)
-    
+    local ply = LeftJam.GetPlayer()
+    local pX, pY = ply.posX, ply.posY
+
+    local endVolume = LeftJam.EndVolume
+    local exitPos = endVolume.pos
+    local size = endVolume.sz
+
+    local in_zone = inrange2D(pX, pY, exitPos[1], exitPos[2], exitPos[1] + size[1], exitPos[2] + size[2])
+
+    if in_zone then
+        if triggeredMaps[LeftJam.CurrMapName] then
+            return
+        end
+
+        -- TODO: implement MAP LOADING
+        local nextMap = mapTree[LeftJam.CurrMapName]
+        if nextMap then
+            LeftJam.SetState(STATE_NEXT_MAP)
+            LeftJam.SetupNextMapUI(nextMap)
+            triggeredMaps[LeftJam.CurrMapName] = true
+            -- normal
+        else
+            -- credits
+        end
+    end
+
 end
 
 
 function LeftJam.LoadMap(name)
+    LeftJam.CurrMapName = name
+
     LeftJam.BumpWorld = bump.newWorld(64) -- this makes A LOT of memory leaks i think since the last one isnt cleaned but no TIME :(
 
     LeftJam.CurrMap = sti("maps/" .. name .. ".lua", {"bump"})

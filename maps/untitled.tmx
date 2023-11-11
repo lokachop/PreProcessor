@@ -140,10 +140,10 @@
 </chunk>
   </data>
  </layer>
- <objectgroup id="3" name="EntLayer" visible="0">
+ <objectgroup id="3" name="EntLayer">
   <object id="1" name="PlayerSpawn" x="736" y="416">
    <point/>
   </object>
-  <object id="5" name="EndPoint" x="1920" y="320" width="96" height="64"/>
+  <object id="5" name="EndPoint" x="832" y="416" width="96" height="64"/>
  </objectgroup>
 </map>

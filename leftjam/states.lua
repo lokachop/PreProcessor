@@ -2,6 +2,7 @@ LeftJam = LeftJam or {}
 STATE_INVALID = -128
 STATE_MENU = 0
 STATE_GAME = 1
+STATE_NEXT_MAP = 2
 
 LeftJam.States = {}
 LeftJam.State = STATE_INVALID

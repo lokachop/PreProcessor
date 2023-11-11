@@ -5,9 +5,7 @@ LeftJam.States = LeftJam.States or {}
 LeftJam.States[STATE_GAME] = {}
 
 LeftJam.States[STATE_GAME].init = function()
-    print("Hello!")
-    LeftJam.LoadMap("untitled")
-
+    --print("Hello!")
     LeftJam.InitPlayer()
 end
 

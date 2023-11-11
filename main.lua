@@ -1,3 +1,9 @@
+-- PreProcessor
+-- a game jam game
+-- made by Lefton
+-- uses alot of libraries
+
+
 math.randomseed(os.time())
 LeftJam = LeftJam or {}
 function love.load()
@@ -5,6 +11,7 @@ function love.load()
 	love.filesystem.load("leftjam/leftjam.lua")()
 	CurTime = 0
 
+	LeftJam.LoadMap("untitled")
 	LeftJam.SetState(STATE_GAME)
 end
 
