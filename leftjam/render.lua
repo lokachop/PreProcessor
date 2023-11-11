@@ -1,0 +1,1 @@
+LeftJam = LeftJam or {}
