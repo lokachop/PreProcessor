@@ -4,6 +4,7 @@ STATE_MENU = 0
 STATE_GAME = 1
 STATE_NEXT_MAP = 2
 STATE_CREDITS = 3
+STATE_DIE = 4
 
 LeftJam.States = {}
 LeftJam.State = STATE_INVALID

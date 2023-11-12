@@ -19,7 +19,7 @@ local credits_blob = [[
  
  
  
-An entry to the [game jam name] game jam
+An entry to the Binghamton Game Jam
 By Lefton
  
  

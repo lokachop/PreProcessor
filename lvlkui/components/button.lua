@@ -2,6 +2,12 @@ LvLKUI = LvLKUI or {}
 
 local cursorClick = love.mouse.getSystemCursor("hand")
 
+local srcHover = love.audio.newSource("audio/menuselect.wav", "static")
+srcHover:setVolume(LeftJam.GlobalAudioLevel)
+
+local srcClick = love.audio.newSource("audio/click.wav", "static")
+srcClick:setVolume(LeftJam.GlobalAudioLevel)
+
 LvLKUI.DeclareComponent("button", {
 	["label"] = "Button",
 	["_isHovered"] = false,
@@ -9,6 +15,7 @@ LvLKUI.DeclareComponent("button", {
 	["MOUSE_CLICK_EXTERNAL"] = false,
 	["_textLabelObj"] = nil,
 	["isDisabled"] = false,
+	["_sndFlag"] = false,
 
 	-- what to do when we're initialized
 	["onInit"] = function(elm)
@@ -18,7 +25,21 @@ LvLKUI.DeclareComponent("button", {
 	end,
 
 	-- what to do each tick?
-	["onThink"] = function()
+	["onThink"] = function(elm)
+		if elm._isHovered and not elm._sndFlag then
+			local clne = srcHover:clone()
+			clne:play()
+			elm._sndFlag = true
+		elseif not elm._isHovered and elm._sndFlag then
+			elm._sndFlag = false
+		end
+	end,
+
+	["onClickInternal"] = function(elm, mx, my, button, hit)
+		if hit and button == 1 then
+			local clne = srcClick:clone()
+			clne:play()
+		end
 	end,
 
 	-- what to do when clicked?
@@ -26,7 +47,7 @@ LvLKUI.DeclareComponent("button", {
 	end,
 
 	-- what to do when hovering?
-	["onHover"] = function(elm, mx, my, hit)
+	["onHover"] = function(elm, mx, my, hit, extern)
 		elm._isHovered = hit
 
 		if hit then

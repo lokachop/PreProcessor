@@ -6,6 +6,7 @@ LeftJam.States[STATE_GAME] = {}
 
 LeftJam.States[STATE_GAME].init = function()
     --print("Hello!")
+    LeftJam.SetPlayerHealth(100)
     LeftJam.InitPlayer()
 end
 
@@ -17,6 +18,10 @@ LeftJam.States[STATE_GAME].think = function(dt)
     LeftJam.CamThink(dt)
     LeftJam.SwitchControllable(dt)
     LeftJam.MapEndThink(dt)
+    LeftJam.ButtonThink(dt)
+    LeftJam.ElevatorThink(dt)
+
+    --LeftJam.DamagePlayer(-dt * 32)
 end
 
 LeftJam.States[STATE_GAME].render = function()

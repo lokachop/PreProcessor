@@ -84,6 +84,9 @@ function LvLKUI.TriggerClick(mx, my, button)
 
     for k, v in pairs(_toTriggerClick) do
         k.onClick(k, v[1], v[2], button, v[3])
+        if k["onClickInternal"] then
+            k.onClickInternal(k, v[1], v[2], button, v[3])
+        end
     end
 end
 
@@ -95,7 +98,7 @@ local function triggerExternalHover(elmlist, mx, my)
         local relativePos = {mx - elmPos[1], my - elmPos[2]}
 
         if elm.MOUSE_HOVER_EXTERNAL then
-            elm.onHover(elm, relativePos[1], relativePos[2], false)
+            elm.onHover(elm, relativePos[1], relativePos[2], false, true)
         end
 
         if elm._childCount > 0 then

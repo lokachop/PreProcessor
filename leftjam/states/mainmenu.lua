@@ -6,6 +6,9 @@ LeftJam.States = LeftJam.States or {}
 LeftJam.States[STATE_MENU] = {}
 
 local _firstMap = "untitled" -- TODO: change on release
+local srcMenu = love.audio.newSource("audio/strategy-games-classic-arcade-game-116828.mp3", "stream")
+srcMenu:setLooping(true)
+srcMenu:setVolume(LeftJam.GlobalAudioLevel)
 
 local function setupButtons()
 	local w, h = love.graphics.getDimensions()
@@ -27,6 +30,7 @@ local function setupButtons()
 		LeftJam.LoadMap(_firstMap)
 		LeftJam.SetState(STATE_GAME)
 		panel_so_we_can_wipe_all:Remove()
+		srcMenu:stop()
 	end)
 	LvLKUI.PushElement(button_start_gaem, panel_so_we_can_wipe_all)
 
@@ -39,6 +43,7 @@ local function setupButtons()
 	button_credits:SetOnClick(function(elm, mx, my)
 		LeftJam.SetState(STATE_CREDITS)
 		panel_so_we_can_wipe_all:Remove()
+		srcMenu:stop()
 	end)
 	LvLKUI.PushElement(button_credits, panel_so_we_can_wipe_all)
 
@@ -49,6 +54,7 @@ end
 
 LeftJam.States[STATE_MENU].init = function()
 	setupButtons()
+	srcMenu:play()
 end
 
 LeftJam.States[STATE_MENU].think = function(dt)

@@ -177,9 +177,9 @@
   </data>
  </layer>
  <objectgroup id="2" name="EntLayer">
-  <object id="1" name="PlayerSpawn" x="-224" y="224">
+  <object id="1" name="PlayerSpawn" type="PlayerSpawn" x="-224" y="224">
    <point/>
   </object>
-  <object id="2" name="EndPoint" x="384" y="-160" width="64" height="64"/>
+  <object id="2" name="EndPoint" type="EndPoint" x="384" y="-160" width="64" height="64"/>
  </objectgroup>
 </map>

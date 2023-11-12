@@ -12,6 +12,28 @@ local PHYSVOID = 5120000
 local CONNECTION_DIST = 512
 local controllables = {}
 
+
+LeftJam.PlayerHealth = 100
+function LeftJam.DamagePlayer(delta)
+    LeftJam.PlayerHealth = math.max(math.min(LeftJam.PlayerHealth + delta, 100), 0)
+    print("hp; ", LeftJam.PlayerHealth)
+
+
+    if LeftJam.PlayerHealth <= 0 then -- we died
+        LeftJam.SetupDieUI()
+        LeftJam.SetState(STATE_DIE)
+
+    end
+end
+
+function LeftJam.SetPlayerHealth(hp)
+    LeftJam.PlayerHealth = hp
+end
+
+function LeftJam.GetPlayerHealth()
+    return LeftJam.PlayerHealth
+end
+
 function LeftJam.NewControllable(id, params)
     params = params or {}
 
@@ -57,13 +79,19 @@ local function isGrounded(self)
     local propSize = math.max((velY * .0025) + 8, 8)
 
 
+    local relaHeight = 0
     local items, len = world:queryRect(gcvX, gcvY, self.sizeX, propSize)
-    return len > 0
+    if len > 0 then
+        relaHeight = items[1].y - self.posY
+    end
+
+    return len > 0, relaHeight
 end
 
 
 local daccel = 512
 local stop_val = 1
+local hover_alt = 28.5
 local function genericPhysics(self, dt) -- applies generic physics movement
     local accelInv = self.velX > 0 and 1 or -1
 
@@ -101,8 +129,12 @@ local function genericPhysics(self, dt) -- applies generic physics movement
     end
 
     -- check if the pos is grounded
-    local ground = isGrounded(self)
+    local ground, relaHeight = isGrounded(self)
     if ground then
+        local deltaAlt = relaHeight - hover_alt
+        self.posY = self.posY + deltaAlt
+
+
         self.velY = 0
         self.grounded = true
     else

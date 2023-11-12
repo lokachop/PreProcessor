@@ -6,6 +6,9 @@
 
 math.randomseed(os.time())
 LeftJam = LeftJam or {}
+
+LeftJam.GlobalAudioLevel = 0.7
+
 function love.load()
 	love.filesystem.load("lvlkui/lvlkui.lua")()
 	love.filesystem.load("leftjam/leftjam.lua")()

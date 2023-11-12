@@ -300,7 +300,7 @@ return {
         {
           id = 1,
           name = "PlayerSpawn",
-          type = "",
+          type = "PlayerSpawn",
           shape = "point",
           x = -224,
           y = 224,
@@ -313,7 +313,7 @@ return {
         {
           id = 2,
           name = "EndPoint",
-          type = "",
+          type = "EndPoint",
           shape = "rectangle",
           x = 384,
           y = -160,
