@@ -31,14 +31,35 @@ local mapConfig = {
     },
     ["map_0"] = {
         ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
-        ["nextMap"] = "untitled",
-        ["backgroundCol"] = {.149, 0.254, .149}
+        ["nextMap"] = "map_2",
+        ["backgroundCol"] = {0, 0, 0},
+        --["backgroundTex"] = "assets/backgroundtest.png"
     },
     ["map_2"] = {
         ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
-        ["nextMap"] = "untitled",
+        ["nextMap"] = "map_3",
         ["backgroundCol"] = {.149, 0.254, .149}
     },
+    ["map_3"] = {
+        ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
+        ["nextMap"] = "map_4",
+        ["backgroundCol"] = {.149, 0.254, .149}
+    },
+    ["map_4"] = {
+        ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
+        ["nextMap"] = "map_5",
+        ["backgroundCol"] = {.149, 0.254, .149}
+    },
+    ["map_5"] = {
+        ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
+        ["nextMap"] = "map_6",
+        ["backgroundCol"] = {.149, 0.254, .149}
+    },
+    ["map_6"] = {
+        ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
+        ["backgroundCol"] = {.149, 0.254, .149}
+    },
+
 }
 
 function LeftJam.GetMapObjectByID(id)

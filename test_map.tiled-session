@@ -1,4 +1,10 @@
 {
+    "activeFile": "maps/untitled.tmx",
+    "expandedProjectPaths": [
+        "maps",
+        ".",
+        "dev_assets"
+    ],
     "fileStates": {
         "": {
             "scaleInDock": 1,
@@ -55,11 +61,11 @@
             "expandedObjectLayers": [
                 3
             ],
-            "scale": 1.5,
-            "selectedLayer": 0,
+            "scale": 0.75,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 745.3333333333333,
-                "y": 355.99999999999994
+                "x": 1150.6666666666665,
+                "y": 379.99999999999994
             }
         },
         "maps/untitled.tmx#dev_tiles": {
@@ -67,6 +73,11 @@
             "scaleInDock": 1
         }
     },
+    "openFiles": [
+        "maps/untitled.tmx",
+        "maps/shit.tmx"
+    ],
+    "project": "test_map.tiled-project",
     "recentFiles": [
         "maps/untitled.tmx",
         "maps/map_1.tmx",

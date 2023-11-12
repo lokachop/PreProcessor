@@ -206,7 +206,7 @@
    </properties>
   </object>
   <object id="12" x="1031.33" y="394.167" width="80" height="31.6667">
-   <text wrap="1" halign="center" valign="center">Hello LeftArm</text>
+   <text wrap="1" halign="center" valign="center">Hello LeftArm :)</text>
   </object>
   <object id="15" name="el1" type="Elevator" x="1600" y="288" width="96" height="32">
    <properties>
