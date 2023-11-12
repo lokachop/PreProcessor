@@ -263,7 +263,7 @@
 </chunk>
   </data>
  </layer>
- <objectgroup id="3" name="EntLayer">
+ <objectgroup id="3" name="EntLayer" visible="0">
   <object id="1" name="Spawn" type="PlayerSpawn" x="712.5" y="613.5">
    <point/>
   </object>
