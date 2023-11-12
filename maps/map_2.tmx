@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="16" tilewidth="32" tileheight="32" infinite="1" nextlayerid="4" nextobjectid="13">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="16" tilewidth="32" tileheight="32" infinite="1" nextlayerid="4" nextobjectid="16">
  <editorsettings>
   <export target="map_2.lua" format="lua"/>
  </editorsettings>
@@ -329,7 +329,7 @@
 </chunk>
   </data>
  </layer>
- <objectgroup id="3" name="EntLayer" visible="0">
+ <objectgroup id="3" name="EntLayer">
   <object id="1" type="PlayerSpawn" x="785.333" y="676">
    <point/>
   </object>

@@ -49,7 +49,7 @@ local mapConfig = {
     ["map_4"] = {
         ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
         ["nextMap"] = "map_5",
-        ["backgroundCol"] = {.149, 0.254, .149}
+        ["backgroundCol"] = {.05, .1, .15}
     },
     ["map_5"] = {
         ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
