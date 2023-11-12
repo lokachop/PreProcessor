@@ -31,13 +31,13 @@ local mapConfig = {
         ["backgroundCol"] = {.2, .3, .4}
     },
     ["map_0"] = {
-        ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
+        ["song"] = "strategy-games-classic-arcade-game-116828.mp3",
         ["nextMap"] = "map_2",
         ["backgroundCol"] = {.149, 0.254, .149},
         --["backgroundTex"] = "assets/backgroundtest.png"
     },
     ["map_2"] = {
-        ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
+        ["song"] = "dizzy-keys-classic-arcade-game-116845.mp3",
         ["nextMap"] = "map_3",
         ["backgroundCol"] = {0, 0, 0}
     },
@@ -47,20 +47,14 @@ local mapConfig = {
         ["backgroundTex"] = "assets/background_c.png"
     },
     ["map_4"] = {
-        ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
+        ["song"] = "dizzy-keys-classic-arcade-game-116845.mp3",
         ["nextMap"] = "map_5",
-        ["backgroundCol"] = {.05, .1, .15}
+        ["backgroundCol"] = {.149, 0.254, .149}
     },
     ["map_5"] = {
-        ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
-        ["nextMap"] = "map_6",
-        ["backgroundCol"] = {.149, 0.254, .149}
+        ["song"] = "strategy-games-classic-arcade-game-116828.mp3",
+        ["backgroundTex"] = "assets/background_c.png"
     },
-    ["map_6"] = {
-        ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
-        ["backgroundCol"] = {.149, 0.254, .149}
-    },
-
 }
 
 function LeftJam.GetMapObjectByID(id)
