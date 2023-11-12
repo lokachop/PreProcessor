@@ -71,3 +71,15 @@ function LeftJam.RenderOKLabGradient(x, y, w, h, cS, cE, steps)
         love.graphics.rectangle("fill", x, y + i * hDiv, w, hDiv)
     end
 end
+
+
+function LeftJam.LocalizePosition(x, y)
+    local cx, cy = LeftJam.GetCamOffset()
+
+    local ox = x
+    local oy = y
+    local relaX = ox - -cx
+    local relaY = oy - -cy
+
+    return relaX, relaY
+end

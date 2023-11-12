@@ -2,6 +2,10 @@ LeftJam = LeftJam or {}
 LeftJam.States = LeftJam.States or {}
 
 
+local srcCredits = love.audio.newSource("audio/dizzy-keys-classic-arcade-game-116845.mp3", "stream")
+srcCredits:setLooping(true)
+srcCredits:setVolume(LeftJam.MusicAudioLevel)
+
 
 local credits_blob = [[
  
@@ -20,7 +24,7 @@ local credits_blob = [[
  
  
 An entry to the Binghamton Game Jam
-By Lefton
+By Lefton and Lokachop
  
  
 --==Libraries used==--
@@ -45,6 +49,14 @@ LibreSprite
  
 GIMP
 [https://www.gimp.org/]
+ 
+Audacity
+[https://www.audacityteam.org/]
+ 
+ 
+--==Other Used==--
+Audio files from pixabay
+[https://pixabay.com/]
  
  
  
@@ -81,6 +93,7 @@ local textSpace = 64
 LeftJam.States[STATE_CREDITS] = {}
 
 LeftJam.States[STATE_CREDITS].init = function()
+    srcCredits:play()
     credit_time = 0
 end
 
@@ -92,6 +105,10 @@ LeftJam.States[STATE_CREDITS].think = function(dt)
         LeftJam.SetState(STATE_MENU)
     end
 
+
+    if love.keyboard.isDown("escape") then -- they want to escape
+        LeftJam.SetState(STATE_MENU)
+    end
 end
 
 local logo = love.graphics.newImage("assets/preprocessor_logo.png")
@@ -118,4 +135,5 @@ LeftJam.States[STATE_CREDITS].render = function()
 end
 
 LeftJam.States[STATE_CREDITS].exit = function()
+    srcCredits:stop()
 end

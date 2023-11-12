@@ -8,7 +8,7 @@ LeftJam.States[STATE_MENU] = {}
 local _firstMap = "untitled" -- TODO: change on release
 local srcMenu = love.audio.newSource("audio/strategy-games-classic-arcade-game-116828.mp3", "stream")
 srcMenu:setLooping(true)
-srcMenu:setVolume(LeftJam.GlobalAudioLevel)
+srcMenu:setVolume(LeftJam.MusicAudioLevel)
 
 local function setupButtons()
 	local w, h = love.graphics.getDimensions()
@@ -47,6 +47,16 @@ local function setupButtons()
 	end)
 	LvLKUI.PushElement(button_credits, panel_so_we_can_wipe_all)
 
+	local button_exit_game = LvLKUI.NewElement("button_exit", "button")
+	button_exit_game:SetPriority(40)
+	button_exit_game:SetPos({(w * .5) - ((256 + 196) * .5), h * .65})
+	button_exit_game:SetSize({256 + 196, 64})
+	button_exit_game:SetLabel("Quit")
+	button_exit_game:SetOnClick(function(elm, mx, my)
+		love.event.quit(0)
+	end)
+	LvLKUI.PushElement(button_exit_game, panel_so_we_can_wipe_all)
+
 	LvLKUI.PushElement(panel_so_we_can_wipe_all)
 end
 
@@ -55,6 +65,7 @@ end
 LeftJam.States[STATE_MENU].init = function()
 	setupButtons()
 	srcMenu:play()
+	LeftJam.StopMapSounds()
 end
 
 LeftJam.States[STATE_MENU].think = function(dt)

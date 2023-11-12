@@ -1,13 +1,14 @@
 -- PreProcessor
 -- a game jam game
--- made by Lefton
+-- made by Lefton and Lokachop
 -- uses alot of libraries
 
 
 math.randomseed(os.time())
 LeftJam = LeftJam or {}
 
-LeftJam.GlobalAudioLevel = 0.7
+LeftJam.GlobalAudioLevel = 0.75
+LeftJam.MusicAudioLevel = 0.2
 
 function love.load()
 	love.filesystem.load("lvlkui/lvlkui.lua")()

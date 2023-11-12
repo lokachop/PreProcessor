@@ -15,6 +15,29 @@ LeftJam.ID2Elevator = {}
 LeftJam.Elevators = {}
 LeftJam.Buttons = {}
 
+
+--[[
+    MAP CONFIG HERE
+]]--
+local mapConfig = {
+    ["untitled"] = {
+        ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
+        ["nextMap"] = "shit",
+        ["backgroundCol"] = {.05, .1, .15}
+    },
+    ["shit"] = {
+        ["song"] = "dizzy-keys-classic-arcade-game-116845.mp3",
+        ["backgroundCol"] = {.2, .3, .4}
+    }
+}
+
+
+
+local mapTree = {
+    ["untitled"] = "shit"
+}
+
+
 function LeftJam.GetMapObjectByID(id)
     return LeftJam.CurrMap.objects[id]
 end
@@ -42,28 +65,34 @@ local mapObjectTypes = {
         local travelTime = prop.travelTime
 
         local destObj = LeftJam.GetMapObjectByID(destID)
-
-
-        print(ent.x, ent.y)
-        print(destObj.x, destObj.y)
         --for k, v in pairs(destObj) do
         --    print("[" .. k .. "]: " .. tostring(v))
         --end
 
         LeftJam.Elevators[#LeftJam.Elevators + 1] = {
+            ["_isElevator"] = true,
             ["_travelFrac"] = 0,
+            ["_isMoving"] = false,
             ["state"] = false,
             ["startPos"] = {ent.x, ent.y},
             ["endPos"] = {destObj.x, destObj.y},
             ["travelTime"] = travelTime,
             ["x"] = ent.x,
+            ["velX"] = 0,
             ["y"] = ent.y,
+            ["w"] = ent.width,
+            ["h"] = ent.height,
             ["onTrigger"] = function(self, triggerFlag)
-                print("triggered!", tostring(triggerFlag))
                 self.state = triggerFlag
-                --return true -- return if we can be triggered again
+                --return true -- return if we can be triggered again0
             end,
+
+            ["sourceSound"] = love.audio.newSource("audio/elevator.wav", "static"),
+            ["activeSound"] = false,
         }
+        local source = LeftJam.Elevators[#LeftJam.Elevators].sourceSound
+        source:setLooping(true)
+        source:setVolume(LeftJam.GlobalAudioLevel)
 
         LeftJam.ID2Elevator[ent.id] = LeftJam.Elevators[#LeftJam.Elevators]
 
@@ -84,7 +113,16 @@ local mapObjectTypes = {
             ["h"] = ent.height,
             ["heldPress"] = true,
             ["pressTarget"] = destObj,
+
+            ["sourceSoundYes"] = love.audio.newSource("audio/button_yes.wav", "static"),
+            ["sourceSoundNo"] = love.audio.newSource("audio/button_no.wav", "static"),
         }
+
+        local source = LeftJam.Buttons[#LeftJam.Buttons].sourceSoundYes
+        source:setVolume(LeftJam.GlobalAudioLevel)
+
+        source = LeftJam.Buttons[#LeftJam.Buttons].sourceSoundNo
+        source:setVolume(LeftJam.GlobalAudioLevel)
     end,
 }
 
@@ -100,9 +138,6 @@ local function lerp(t, a, b)
     return a * (1 - t) + b * t
 end
 
-local mapTree = {
-    ["untitled"] = "shit"
-}
 
 function LeftJam.ButtonThink(dt)
     local bumpWorld = LeftJam.BumpWorld
@@ -117,16 +152,28 @@ function LeftJam.ButtonThink(dt)
         end
 
         if hit and (not v._flagHeld) then
+            local source = v.sourceSoundYes
+            source:play()
+
             local target = v.pressTarget
             target.onTrigger(target, true)
 
             v._flagHeld = true
         elseif not hit and v._flagHeld then
+            local source = v.sourceSoundNo
+            source:play()
+
             local target = v.pressTarget
 
             target.onTrigger(target, false)
             v._flagHeld = false
         end
+
+        local rx, ry = LeftJam.LocalizePosition(v.x + (v.w * .5), v.y)
+        local _div = 64
+
+        v.sourceSoundYes:setPosition(rx / _div, ry / _div, 0)
+        v.sourceSoundNo:setPosition(rx / _div, ry / _div, 0)
     end
 end
 
@@ -145,32 +192,65 @@ function LeftJam.ElevatorThink(dt)
             fracChanged = true
         end
 
+        if fracChanged and not v.activeSound then
+            local source = v.sourceSound
+            source:play()
+
+            v.activeSound = true
+        elseif not fracChanged and v.activeSound then
+            local source = v.sourceSound
+            source:stop()
+
+            v.activeSound = false
+        end
+
+        if v.activeSound then
+            local rx, ry = LeftJam.LocalizePosition(v.x + (v.w * .5), v.y)
+            local _div = 64
+
+            local source = v.sourceSound
+            source:setPosition(rx / _div, ry / _div, 0)
+        end
+
 
         -- the fraction has updated, move us
         if fracChanged then
+            v._isMoving = true
             local srcX, srcY = v.startPos[1], v.startPos[2]
             local dstX, dstY = v.endPos[1], v.endPos[2]
 
             local xc = lerp(v._travelFrac, srcX, dstX)
             local yc = lerp(v._travelFrac, srcY, dstY)
 
+            local actSign = v.state and 1 or -1
+
+            local fract = (1 / v.travelTime)
+            local xChange = (dstX - srcX) * fract * dt
+
+            v.velX = xChange * actSign
+
             v.x = xc
             v.y = yc
 
             bumpWorld:update(v, xc, yc)
+        else
+            v._isMoving = false
         end
 
     end
 end
 
-
 -- setup UI for next map
 
 local triggeredMaps = {}
 
+local srcWin = love.audio.newSource("audio/win.wav", "static")
+srcWin:setVolume(LeftJam.GlobalAudioLevel)
+
+
 function LeftJam.MapEndThink(dt)
     local ply = LeftJam.GetPlayer()
-    local pX, pY = ply.posX, ply.posY
+    local pX, pY = ply.x, ply.y
 
     local endVolume = LeftJam.EndVolume
     local exitPos = endVolume.pos
@@ -182,15 +262,19 @@ function LeftJam.MapEndThink(dt)
         if triggeredMaps[LeftJam.CurrMapName] then
             return
         end
+        srcWin:play()
+
+        local mapData = mapConfig[LeftJam.CurrMapName]
 
         -- TODO: implement MAP LOADING
-        local nextMap = mapTree[LeftJam.CurrMapName]
+        local nextMap = mapData.nextMap
         if nextMap then
             LeftJam.SetState(STATE_NEXT_MAP)
             LeftJam.SetupNextMapUI(nextMap)
             triggeredMaps[LeftJam.CurrMapName] = true
             -- normal
         else
+            print("no next map :8")
             -- credits
         end
     end
@@ -198,7 +282,25 @@ function LeftJam.MapEndThink(dt)
 end
 
 
+
+local srcMapSong = nil
+
+function LeftJam.StopMapSounds()
+    for k, v in ipairs(LeftJam.Elevators) do
+        if v.activeSound then
+            v.sourceSound:stop()
+        end
+    end
+
+    if srcMapSong then
+        srcMapSong:stop()
+    end
+end
+
 function LeftJam.LoadMap(name)
+    LeftJam.StopMapSounds()
+
+    triggeredMaps = {}
     LeftJam.EndVolume = {}
 
     LeftJam.Elevators = {}
@@ -212,6 +314,13 @@ function LeftJam.LoadMap(name)
 
     LeftJam.CurrMap:bump_init(LeftJam.BumpWorld)
     LeftJam.CurrMap:removeLayer("CollisionLayer")
+
+    -- audio
+    local mapData = mapConfig[LeftJam.CurrMapName]
+    srcMapSong = love.audio.newSource("audio/" .. mapData.song, "stream")
+    srcMapSong:setLooping(true)
+    srcMapSong:setVolume(LeftJam.MusicAudioLevel)
+    srcMapSong:play()
 
 
     -- setup entities
@@ -237,7 +346,12 @@ function LeftJam.LoadMap(name)
             else
                 love.graphics.setColor(1, 1, 1)
             end
-            love.graphics.draw(v.tex, math.floor(v.posX), math.floor(v.posY))
+
+            if v.quad then
+                love.graphics.draw(v.tex, v.quad, math.floor(v.x), math.floor(v.y))
+            else
+                love.graphics.draw(v.tex, math.floor(v.x), math.floor(v.y))
+            end
 
             ::_cont::
         end
@@ -266,14 +380,57 @@ function LeftJam.MapThink(dt)
     LeftJam.CurrMap:update(dt)
 end
 
-function LeftJam.MapDraw()
+
+local texElevator = love.graphics.newImage("assets/elevator.png")
+texElevator:setFilter("nearest", "nearest")
+texElevator:setWrap("repeat")
+
+local quadElevator = love.graphics.newQuad(0, 0, 32, 32, texElevator)
+
+local function renderElevators()
+    local w, h = love.graphics.getDimensions()
     local cx, cy, cz = LeftJam.GetCamParameteri()
 
+    love.graphics.push()
+        love.graphics.translate(-w * .5, -h * .5)
+        love.graphics.scale(cz, cz)
+        love.graphics.translate(w * .5, h * .5)
+        love.graphics.translate(math.floor(cx), math.floor(cy))
+
+        local tw, th = texElevator:getDimensions()
+        for k, v in ipairs(LeftJam.Elevators) do
+            quadElevator:setViewport(0, 0, v.w, v.h)
+
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.draw(texElevator, quadElevator, v.x, v.y)
+            --love.graphics.setColor(1, 0, 0)
+            --love.graphics.rectangle("fill", v.x, v.y, v.w, v.h)
+        end
+
+    love.graphics.pop()
+end
+
+function LeftJam.MapDraw()
+    love.graphics.setColor(1, 1, 1)
     local w, h = love.graphics.getDimensions()
+
+    local mapData = mapConfig[LeftJam.CurrMapName]
+    if mapData and mapData.backgroundCol then
+        local col = mapData.backgroundCol
+        love.graphics.setColor(col[1], col[2], col[3])
+        love.graphics.rectangle("fill", 0, 0, w, h)
+    end
+
+    local cx, cy, cz = LeftJam.GetCamParameteri()
     local wd, hd = w / cz, h / cz
 
 
-    LeftJam.CurrMap:draw(cx + wd * .5, cy + hd * .5, cz)
 
-    LeftJam.CurrMap:bump_draw(cx + wd * .5, cy + hd * .5, cz, cz)
+    love.graphics.setColor(1, 1, 1)
+    LeftJam.CurrMap:draw(cx + wd * .5, cy + hd * .5, cz)
+    renderElevators()
+
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.setLineWidth(1)
+    --LeftJam.CurrMap:bump_draw(cx + wd * .5, cy + hd * .5, cz, cz)
 end

@@ -20,6 +20,8 @@ LeftJam.States[STATE_GAME].think = function(dt)
     LeftJam.MapEndThink(dt)
     LeftJam.ButtonThink(dt)
     LeftJam.ElevatorThink(dt)
+    LeftJam.PlayerFallVoidDie()
+    LeftJam.PlayerAnimThink(dt)
 
     --LeftJam.DamagePlayer(-dt * 32)
 end

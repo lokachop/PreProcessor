@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="16" tilewidth="32" tileheight="32" infinite="1" nextlayerid="5" nextobjectid="9">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="16" tilewidth="32" tileheight="32" infinite="1" nextlayerid="5" nextobjectid="12">
  <editorsettings>
   <export target="untitled.lua" format="lua"/>
  </editorsettings>
@@ -73,11 +73,11 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,3,1,1,1,1,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,1,1,1,1,1,1,0,0,0,0,1,1,
-1,1,1,1,1,0,0,0,0,1,1,0,0,0,1,0,
+1,0,1,1,1,0,0,0,0,1,1,0,0,0,1,0,
 0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0
 </chunk>
    <chunk x="48" y="0" width="16" height="16">
@@ -149,11 +149,11 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,2,2,2,2,2,2,0,0,0,0,2,2,
-2,2,2,2,2,0,0,0,0,2,2,0,0,0,2,0,
+2,0,2,2,2,0,0,0,0,2,2,0,0,0,2,0,
 0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,0
 </chunk>
    <chunk x="48" y="0" width="16" height="16">
@@ -176,7 +176,7 @@
 </chunk>
   </data>
  </layer>
- <objectgroup id="3" name="EntLayer">
+ <objectgroup id="3" name="EntLayer" visible="0">
   <object id="1" name="PlayerSpawn" type="PlayerSpawn" x="736" y="416">
    <point/>
   </object>
@@ -191,6 +191,18 @@
   <object id="8" name="ButtonElevation" type="Button" x="544" y="256" width="17.3333" height="32">
    <properties>
     <property name="TriggerOnPressed" type="object" value="6"/>
+   </properties>
+  </object>
+  <object id="9" name="ElvTest1" type="Elevator" x="1184" y="352" width="16" height="64">
+   <properties>
+    <property name="destinationObj" type="object" value="10"/>
+    <property name="travelTime" type="float" value="6"/>
+   </properties>
+  </object>
+  <object id="10" name="ElvTest1Dest" type="ElevatorDestination" x="1184" y="256" width="16" height="64"/>
+  <object id="11" name="ButtonElevation" type="Button" x="1168" y="320" width="17.3333" height="32">
+   <properties>
+    <property name="TriggerOnPressed" type="object" value="9"/>
    </properties>
   </object>
  </objectgroup>

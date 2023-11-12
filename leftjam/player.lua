@@ -9,7 +9,7 @@ local SELECTED_TARGET = 2
 
 
 local PHYSVOID = 5120000
-local CONNECTION_DIST = 512
+local CONNECTION_DIST = 256
 local controllables = {}
 
 
@@ -38,8 +38,8 @@ function LeftJam.NewControllable(id, params)
     params = params or {}
 
     controllables[id] = {
-        posX = 0,
-        posY = 0,
+        x = 0,
+        y = 0,
         velX = 0,
         velY = 0,
         rSeed = math.random(),
@@ -72,26 +72,35 @@ local function isGrounded(self)
     local world = LeftJam.BumpWorld
 
 
-    local gcvX = self.posX
-    local gcvY = self.posY + self.sizeY
+    local gcvX = self.x
+    local gcvY = self.y + self.sizeY
 
     local velY = self.velY
     local propSize = math.max((velY * .0025) + 8, 8)
 
 
     local relaHeight = 0
+    local xAdd = nil
     local items, len = world:queryRect(gcvX, gcvY, self.sizeX, propSize)
     if len > 0 then
-        relaHeight = items[1].y - self.posY
-    end
+        local item = items[1]
+        relaHeight = item.y - self.y
 
-    return len > 0, relaHeight
+        if item._isElevator == true and item._isMoving == true then
+            xAdd = item.velX
+        end
+    end
+    return len > 0, relaHeight, xAdd
 end
+
+
+local soundLand = love.audio.newSource("audio/land.wav", "static")
+soundLand:setVolume(LeftJam.GlobalAudioLevel)
 
 
 local daccel = 512
 local stop_val = 1
-local hover_alt = 28.5
+local hover_alt = 30.5
 local function genericPhysics(self, dt) -- applies generic physics movement
     local accelInv = self.velX > 0 and 1 or -1
 
@@ -100,7 +109,7 @@ local function genericPhysics(self, dt) -- applies generic physics movement
     self.velX = self.velX - accelInv * dt * .5
 
 
-    local nx, ny = self.posX + (self.velX * dt), self.posY + (self.velY * dt)
+    local nx, ny = self.x + (self.velX * dt), self.y + (self.velY * dt)
 
     local world = LeftJam.BumpWorld
     local ax, ay, cols, len = world:move(self, nx, ny)
@@ -116,8 +125,8 @@ local function genericPhysics(self, dt) -- applies generic physics movement
         end
     end
 
-    self.posX = ax
-    self.posY = ay
+    self.x = ax
+    self.y = ay
 
 
     self.velY = self.velY + 24
@@ -129,14 +138,22 @@ local function genericPhysics(self, dt) -- applies generic physics movement
     end
 
     -- check if the pos is grounded
-    local ground, relaHeight = isGrounded(self)
+    local ground, relaHeight, xAdd = isGrounded(self)
     if ground then
         local deltaAlt = relaHeight - hover_alt
-        self.posY = self.posY + deltaAlt
+        self.y = self.y + deltaAlt
 
 
         self.velY = 0
+        if not self.grounded then
+            soundLand:play()
+        end
+
         self.grounded = true
+
+        if xAdd then
+            self.x = self.x + (xAdd * 1.0)
+        end
     else
         self.grounded = false
     end
@@ -153,10 +170,10 @@ function LeftJam.InitPlayer()
 
     for k, v in ipairs(controllables) do
 
-        v.posX = sx
-        v.posY = sy
-        local pPhysX = v.posX
-        local pPhysY = v.posY
+        v.x = sx
+        v.y = sy
+        local pPhysX = v.x
+        local pPhysY = v.y
         if v["physicsVoid"] then
             pPhysX = PHYSVOID
             pPhysY = PHYSVOID
@@ -174,31 +191,37 @@ function LeftJam.InitPlayer()
 end
 
 
-local function new_lp_tex(path)
+local function new_lp_tex(path, w, h)
     local imga = love.graphics.newImage(path)
     imga:setFilter("nearest", "nearest")
-    return imga
+
+    if w then
+        local quad = love.graphics.newQuad(0, 0, w, h, imga)
+        return imga, quad
+    else
+        return imga
+    end
 end
 
 
+local soundJump = love.audio.newSource("audio/jump.wav", "static")
+soundJump:setVolume(LeftJam.GlobalAudioLevel)
 -- rendering
-local tex_torso = new_lp_tex("dev_assets/dev_player_torso.png")
+local tex_torso, quad_torso = new_lp_tex("assets/player_body_idle.png", 21, 32)
 
-
+local tex_torso_move = new_lp_tex("assets/player_body_walk.png", 21, 32)
 
 LeftJam.NewControllable(TARGET_BODY, {
-    ["sizeX"] = 12,
+    ["sizeX"] = 21,
     ["sizeY"] = 23,
 
     ["tex"] = tex_torso,
+    ["quad"] = quad_torso,
 
     ["theParent"] = true, -- redundant but cool
     ["children"] = {},
     ["controlled"] = true,
     ["canMove"] = function(self)
-        local children = self.children
-        --local l1 = children["TARGET_LEGS"].isDocked
-
         return true
     end,
     ["moveFunc"] = function(self, dt)
@@ -228,6 +251,7 @@ LeftJam.NewControllable(TARGET_BODY, {
 
         if (love.keyboard.isDown("w") or love.keyboard.isDown("space")) and self.grounded then
             self.velY = -256 - 128
+            soundJump:play()
         end
 
 
@@ -263,27 +287,27 @@ local function limbDock(self, dt, velMin, velMax)
     local dx, dy = self.realcdX, self.realcdY
 
     local parent = self.parent
-    local fx, fy = dx + parent.posX, dy + parent.posY
+    local fx, fy = dx + parent.x, dy + parent.y
 
-    local deltaDist = dist2D(self.posX, self.posY, fx, fy)
+    local deltaDist = dist2D(self.x, self.y, fx, fy)
     deltaDist = math.max(math.min(deltaDist + velMin, velMax), velMin)
 
-    local mx, my = moveTowards2D(self.posX, self.posY, fx, fy, dt * deltaDist)
-    self.posX = mx
-    self.posY = my
+    local mx, my = moveTowards2D(self.x, self.y, fx, fy, dt * deltaDist)
+    self.x = mx
+    self.y = my
 
     --local world = LeftJam.BumpWorld
-    --world:update(self, self.posX, self.posY)
+    --world:update(self, self.x, self.y)
 
 end
 
 
-local tex_arm = new_lp_tex("dev_assets/dev_player_arm.png")
+local tex_arm = new_lp_tex("assets/player_arm.png")
 
 
 local function armCanMove(self, nx, ny)
     local parent = self.parent
-    local px, py = parent.posX, parent.posY
+    local px, py = parent.x, parent.y
 
     local dist = dist2D(nx, ny, px, py)
     if dist > CONNECTION_DIST then
@@ -310,14 +334,14 @@ local function armMove(self, dt)
         end
 
         local _mvVel = 128
-        local nx = self.posX
-        local ny = self.posY
+        local nx = self.x
+        local ny = self.y
 
         local parent = self.parent
-        local px, py = parent.posX, parent.posY
+        local px, py = parent.x, parent.y
 
         local dist = dist2D(nx, ny, px, py)
-        local deltaDist = 1 - (dist / CONNECTION_DIST)
+        local deltaDist = (1 - (dist / CONNECTION_DIST)) * 1.5
 
         local changed = false
         if love.keyboard.isDown("d") then
@@ -346,7 +370,7 @@ local function armMove(self, dt)
 
         if not self.lastDockFlag then
             self.lastDockFlag = true
-            self.posY = self.posY - 24
+            self.y = self.y - 24
         end
 
         if not self:canMove(nx, ny) then
@@ -358,7 +382,7 @@ local function armMove(self, dt)
         end
 
         local world = LeftJam.BumpWorld
-        world:update(self, self.posX, self.posY)
+        world:update(self, self.x, self.y)
 
         local found = false
         local border_pardon = 4
@@ -374,19 +398,19 @@ local function armMove(self, dt)
 
         if found then
             self.isGlued = true
-            world:update(self, self.posX, self.posY)
+            world:update(self, self.x, self.y)
 
 
             local ax, ay, cols, len = world:move(self, nx, ny)
-            self.posX = ax
-            self.posY = ay
+            self.x = ax
+            self.y = ay
             self._colourTint = {0.5, 1, 0.5}
         else
             self.isGlued = false
             world:update(self, PHYSVOID, PHYSVOID)
 
-            self.posX = nx
-            self.posY = ny
+            self.x = nx
+            self.y = ny
             self._colourTint = {1, 0.5, 0.5}
         end
 
@@ -464,8 +488,8 @@ function LeftJam.CamThink(dt)
 
     local target = controllables[SELECTED_TARGET]
 
-    local tPosX = -target.posX
-    local tPosY = -target.posY
+    local tPosX = -target.x
+    local tPosY = -target.y
 
     local tVelX = -target.velX
     local tVelY = -target.velY
@@ -563,7 +587,7 @@ function LeftJam.RenderControlSphere()
 
 
         local playerEnt = LeftJam.GetPlayer()
-        local plyX, plyY = playerEnt.posX, playerEnt.posY
+        local plyX, plyY = playerEnt.x, playerEnt.y
 
         love.graphics.setColor(1, 0.25, 0.25, 0.25)
         love.graphics.circle("fill", plyX, plyY, CONNECTION_DIST)
@@ -572,4 +596,37 @@ function LeftJam.RenderControlSphere()
         --love.graphics.circle("fill", plyX + 6, plyY, 1)
 
     love.graphics.pop()
+end
+
+function LeftJam.PlayerFallVoidDie()
+    local ply = LeftJam.GetPlayer()
+    if ply.y > 5120 then
+        LeftJam.DamagePlayer(-51200000000000) -- no surviving this one
+    end
+end
+
+local animTimer = 0
+local _lastTex = false
+function LeftJam.PlayerAnimThink(dt)
+    animTimer = animTimer + dt
+
+    local ply = LeftJam.GetPlayer()
+    local velThresh = math.abs(ply.velX) > 4
+    if velThresh and not _lastTex then
+        ply.tex = tex_torso_move
+
+        _lastTex = true
+    elseif not velThresh and _lastTex then
+        ply.tex = tex_torso
+
+        _lastTex = false
+    end
+
+    -- update the quad
+    local _frames = 3
+
+    local animFrame = (math.floor(animTimer * 6) % (_frames))
+    --print(animFrame)
+
+    ply.quad:setViewport(animFrame * ply.sizeX, 0, ply.sizeX, 32)
 end

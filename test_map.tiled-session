@@ -19,6 +19,21 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "maps/kernal.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "maps/map_1.tmx": {
+            "scale": 1,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 1334,
+                "y": 421
+            }
+        },
+        "maps/map_1.tmx#dev_tiles": {
+            "scaleInDock": 1
+        },
         "maps/min_preset.tmx": {
             "scale": 0.8349609375,
             "selectedLayer": 0,
@@ -34,8 +49,8 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 108,
-                "y": -75
+                "x": 106,
+                "y": -77
             }
         },
         "maps/shit.tmx#dev_tiles": {
@@ -50,8 +65,8 @@
             "scale": 1.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1831.333333333333,
-                "y": 431.99999999999994
+                "x": 1162,
+                "y": 483.33333333333337
             }
         },
         "maps/untitled.tmx#dev_tiles": {
@@ -72,6 +87,7 @@
     "project": "test_map.tiled-project",
     "property.type": "float",
     "recentFiles": [
+        "maps/map_1.tmx",
         "maps/shit.tmx",
         "maps/untitled.tmx",
         "dev_assets/dev_tiles.tsx",
