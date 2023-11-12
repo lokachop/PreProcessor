@@ -30,7 +30,7 @@ LeftJam.States[STATE_GAME].render = function()
     love.graphics.clear(.2, .3, .4)
     love.graphics.setColor(1, 1, 1)
     LeftJam.MapDraw()
-    LeftJam.RenderControlSphere()
+    --LeftJam.RenderControlSphere()
 
     love.graphics.setColor(1, 1, 1)
     --LeftJam.PlayerDraw()

@@ -7,7 +7,7 @@ LeftJam.CurrMap = nil
 LeftJam.EntLayer = nil
 LeftJam.BumpWorld = nil
 LeftJam.MapSpawnPoint = nil
-
+LeftJam.TexBackGround = nil
 
 LeftJam.EndVolume = {}
 
@@ -23,7 +23,8 @@ local mapConfig = {
     ["untitled"] = {
         ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
         ["nextMap"] = "shit",
-        ["backgroundCol"] = {.05, .1, .15}
+        --["backgroundCol"] = {.05, .1, .15},
+        ["backgroundTex"] = "dev_assets/background.png"
     },
     ["shit"] = {
         ["song"] = "dizzy-keys-classic-arcade-game-116845.mp3",
@@ -32,18 +33,18 @@ local mapConfig = {
     ["map_0"] = {
         ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
         ["nextMap"] = "map_2",
-        ["backgroundCol"] = {0, 0, 0},
+        ["backgroundCol"] = {.149, 0.254, .149},
         --["backgroundTex"] = "assets/backgroundtest.png"
     },
     ["map_2"] = {
         ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
         ["nextMap"] = "map_3",
-        ["backgroundCol"] = {.149, 0.254, .149}
+        ["backgroundCol"] = {0, 0, 0}
     },
     ["map_3"] = {
         ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
         ["nextMap"] = "map_4",
-        ["backgroundCol"] = {.149, 0.254, .149}
+        ["backgroundTex"] = "assets/background_c.png"
     },
     ["map_4"] = {
         ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
@@ -358,6 +359,10 @@ function LeftJam.LoadMap(name)
     srcMapSong:play()
 
 
+    if mapData.backgroundTex then
+        LeftJam.TexBackGround = love.graphics.newImage(mapData.backgroundTex)
+    end
+
     -- setup entities
     for k, v in pairs(LeftJam.CurrMap.objects) do
         if mapObjectTypes[v.type] then
@@ -472,6 +477,9 @@ function LeftJam.MapDraw()
         local col = mapData.backgroundCol
         love.graphics.setColor(col[1], col[2], col[3])
         love.graphics.rectangle("fill", 0, 0, w, h)
+    elseif mapData and mapData.backgroundTex then
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.draw(LeftJam.TexBackGround, 0, 0)
     end
 
     local cx, cy, cz = LeftJam.GetCamParameteri()

@@ -5,7 +5,7 @@ LeftJam.States = LeftJam.States or {}
 
 LeftJam.States[STATE_MENU] = {}
 
-local _firstMap = "map_0" -- TODO: change on release
+local _firstMap = "map_3" -- TODO: change on release
 local srcMenu = love.audio.newSource("audio/strategy-games-classic-arcade-game-116828.mp3", "stream")
 srcMenu:setLooping(true)
 srcMenu:setVolume(LeftJam.MusicAudioLevel)
