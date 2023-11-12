@@ -35,6 +35,11 @@ local mapConfig = {
         ["nextMap"] = "untitled",
         ["backgroundCol"] = {.149, 0.254, .149}
     },
+    ["map_2"] = {
+        ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
+        ["nextMap"] = "untitled",
+        ["backgroundCol"] = {.149, 0.254, .149}
+    },
 }
 
 

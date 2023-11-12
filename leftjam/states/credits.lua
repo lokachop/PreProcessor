@@ -57,8 +57,11 @@ Audacity
 --==Other Used==--
 Audio files from pixabay
 [https://pixabay.com/]
- 
- 
+
+
+--==Inspired By==--
+ Tim and Geoff Follin
+ [https://www.follinmusic.com/]
  
  
  
