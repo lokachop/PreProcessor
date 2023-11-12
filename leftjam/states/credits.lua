@@ -60,8 +60,19 @@ Audio files from pixabay
 
 
 --==Inspired By==--
- Tim and Geoff Follin
- [https://www.follinmusic.com/]
+Tim and Geoff Follin
+[https://www.follinmusic.com/]
+ 
+
+Plok
+ 
+ 
+ 
+ 
+#plok_logo#
+ 
+ 
+ 
  
  
  
@@ -84,6 +95,8 @@ for line in lines do
 
     if line == "#title#" then
         lineData[lineID] = "title"
+    elseif line == "#plok_logo#" then
+        lineData[lineID] = "plok_logo"
     else
         lineData[lineID] = love.graphics.newText(_font, line)
     end
@@ -117,6 +130,9 @@ end
 local logo = love.graphics.newImage("assets/preprocessor_logo.png")
 logo:setFilter("nearest", "nearest")
 
+local plok = love.graphics.newImage("assets/plok.png")
+plok:setFilter("nearest", "nearest")
+
 LeftJam.States[STATE_CREDITS].render = function()
     love.graphics.clear(0, 0, 0)
 
@@ -130,6 +146,10 @@ LeftJam.States[STATE_CREDITS].render = function()
             local lw, lh = logo:getDimensions()
             local sclMul = 12
             love.graphics.draw(logo, w * .5 - lw * .5 * sclMul, (k * textSpace) - (credit_time * scroll_speed) - lh * .5 * sclMul, 0, sclMul, sclMul)
+        elseif v == "plok_logo" then
+            local lw, lh = plok:getDimensions()
+            local sclMul = 0.5
+            love.graphics.draw(plok, w * .5 - lw * .5 * sclMul, (k * textSpace) - (credit_time * scroll_speed) - lh * .5 * sclMul, 0, sclMul, sclMul)
         else
             local tw, th = v:getDimensions()
             love.graphics.draw(v, w * .5 - tw * .5, (k * textSpace) - (credit_time * scroll_speed))
