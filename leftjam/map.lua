@@ -53,7 +53,7 @@ local mapConfig = {
     },
     ["map_5"] = {
         ["song"] = "strategy-games-classic-arcade-game-116828.mp3",
-        ["backgroundTex"] = "assets/background_c.png"
+        ["backgroundTex"] = "assets/background_d.png"
     },
 }
 
@@ -303,7 +303,9 @@ function LeftJam.MapEndThink(dt)
             triggeredMaps[LeftJam.CurrMapName] = true
             -- normal
         else
-            print("no next map :8")
+            LeftJam.SetState(STATE_NEXT_MAP)
+            LeftJam.SetupNextMapUI("credits")
+            triggeredMaps[LeftJam.CurrMapName] = true
             -- credits
         end
     end

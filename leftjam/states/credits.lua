@@ -109,6 +109,7 @@ local textSpace = 64
 LeftJam.States[STATE_CREDITS] = {}
 
 LeftJam.States[STATE_CREDITS].init = function()
+    LeftJam.StopMapSounds()
     srcCredits:play()
     credit_time = 0
 end

@@ -26,6 +26,42 @@
             "dynamicWrapping": false,
             "scaleInDock": 1
         },
+        "maps/map5.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 0.25,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 456,
+                "y": -540
+            }
+        },
+        "maps/map5.tmx#BinaryTile_Embedded": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/map5.tmx#dev_tiles": {
+            "dynamicWrapping": true
+        },
+        "maps/map5.tmx#dev_tiles_embed": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/map5.tmx#kernal_embed": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/map5.tmx#pipe": {
+            "dynamicWrapping": false
+        },
+        "maps/map5.tmx#pipe_embed": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "maps/map_1.tmx": {
             "scale": 1,
             "selectedLayer": 2,
@@ -75,11 +111,11 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 1,
+            "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 273,
-                "y": -237
+                "x": 381.3333333333333,
+                "y": -293.33333333333337
             }
         },
         "maps/map_3.tmx#BinaryTile": {
@@ -107,6 +143,15 @@
         "maps/map_3.tmx#pipe_embedded": {
             "dynamicWrapping": false,
             "scaleInDock": 1
+        },
+        "maps/map_5.tmx#BinaryTile_Embedded": {
+            "dynamicWrapping": false
+        },
+        "maps/map_5.tmx#dev_tiles_embed": {
+            "dynamicWrapping": true
+        },
+        "maps/map_5.tmx#kernal_embed": {
+            "dynamicWrapping": false
         },
         "maps/min_preset.tmx": {
             "scale": 0.8349609375,
@@ -163,6 +208,7 @@
     ],
     "project": "test_map.tiled-project",
     "recentFiles": [
+        "maps/map5.tmx",
         "maps/map_3.tmx",
         "maps/map_1.tmx",
         "maps/map_2.tmx",

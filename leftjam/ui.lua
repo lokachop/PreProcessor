@@ -15,11 +15,15 @@ function LeftJam.SetupNextMapUI(map)
 	buttonNext:SetPriority(40)
 	buttonNext:SetPos({128 - (128 * .5), 24 + 8 + 16})
 	buttonNext:SetSize({128, 32})
-	buttonNext:SetLabel("Next Level")
+	buttonNext:SetLabel(map == "credits" and "Credits" or "Next Level")
 	buttonNext:SetColourOverride({0.25, 0.5, 0.25}, {0.1, 0.25, 0.1}, {0.5, 1, 0.5})
 	buttonNext:SetOnClick(function(elm, mx, my)
-		LeftJam.LoadMap(map)
-		LeftJam.SetState(STATE_GAME)
+		if map == "credits" then
+			LeftJam.SetState(STATE_CREDITS)
+		else
+			LeftJam.LoadMap(map)
+			LeftJam.SetState(STATE_GAME)
+		end
 		frameNextMap:Remove()
 	end)
 	LvLKUI.PushElement(buttonNext, frameNextMap)
