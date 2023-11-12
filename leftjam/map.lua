@@ -27,8 +27,14 @@ local mapConfig = {
     },
     ["shit"] = {
         ["song"] = "dizzy-keys-classic-arcade-game-116845.mp3",
+       
         ["backgroundCol"] = {.2, .3, .4}
-    }
+    },
+    ["map_0"] = {
+        ["song"] = "chucks-egg-classic-arcade-game-116841.mp3",
+        ["nextMap"] = "untitled",
+        ["backgroundCol"] = {.149, 0.254, .149}
+    },
 }
 
 

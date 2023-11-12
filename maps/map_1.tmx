@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="16" tilewidth="32" tileheight="32" infinite="1" nextlayerid="4" nextobjectid="10">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="16" tilewidth="32" tileheight="32" infinite="1" nextlayerid="4" nextobjectid="20">
  <editorsettings>
-  <export target="untitled.lua" format="lua"/>
+  <export target="map_0.lua" format="lua"/>
  </editorsettings>
  <tileset firstgid="1" name="dev_tiles" tilewidth="32" tileheight="32" tilecount="5" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
@@ -24,24 +24,37 @@
    <image width="32" height="32" source="../dev_assets/end.png"/>
   </tile>
  </tileset>
- <tileset firstgid="6" source="kernal.tsx"/>
- <tileset firstgid="13" source="pipe.tsx"/>
+ <tileset firstgid="6" name="kernal" tilewidth="32" tileheight="32" tilecount="7" columns="7">
+  <image source="../dev_assets/kernal.png" width="224" height="32"/>
+ </tileset>
+ <tileset firstgid="13" name="elevator" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="../assets/elevator.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="14" name="kernal_final" tilewidth="32" tileheight="32" tilecount="7" columns="7">
+  <image source="../dev_assets/kernal.png" width="224" height="32"/>
+ </tileset>
+ <tileset firstgid="21" name="pipe_final" tilewidth="32" tileheight="32" tilecount="6" columns="2">
+  <image source="../dev_assets/pipe.png" width="64" height="96"/>
+ </tileset>
+ <tileset firstgid="27" name="BinaryTile_Final" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+  <image source="../dev_assets/BinaryTile.png" width="128" height="128"/>
+ </tileset>
  <layer id="1" name="RenderLayer" width="32" height="16">
   <data encoding="csv">
    <chunk x="16" y="0" width="16" height="16">
-7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-7,7,7,2147483661,7,7,7,7,7,7,7,7,7,7,7,7,
-7,7,7,2147483663,7,7,7,7,7,7,7,7,7,7,7,7,
-7,7,7,2147483665,7,7,7,7,7,7,3,8,7,7,7,7,
-7,7,7,8,7,7,7,8,8,8,8,8,8,8,8,8,
-7,7,7,8,7,7,7,8,8,8,8,8,8,8,8,8,
 7,7,7,8,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,8,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,8,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,8,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,8,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,8,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,8,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,2147483669,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,2147483671,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,2147483673,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,9,7,7,7,17,8,8,8,8,8,8,8,8,
+7,7,7,8,7,7,7,8,8,8,8,8,8,8,8,8,
+7,7,7,8,16,16,16,16,7,7,7,7,7,7,7,7,
 7,7,7,8,7,7,7,7,7,7,7,7,7,7,7,10,
 7,7,7,8,7,7,7,7,7,7,7,7,7,7,7,10,
 7,7,7,8,7,7,7,7,7,7,7,7,7,7,7,10
@@ -56,9 +69,9 @@
 7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
 7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
 7,7,7,7,7,7,7,7,7,6,6,6,6,6,6,6,
-7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,8,2147483651,7,7,7,7,7,7,7,7,7,7,
 8,8,8,8,8,8,7,7,7,7,7,7,7,7,8,8,
-8,8,8,8,8,8,0,0,0,0,0,0,0,0,8,8,
+8,8,8,8,8,8,7,7,7,7,7,7,7,7,8,8,
 7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
 7,7,7,7,7,10,7,7,7,7,7,7,7,7,7,7,
 7,7,7,7,7,10,7,7,7,7,7,7,7,7,7,7,
@@ -101,7 +114,7 @@
 7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7
 </chunk>
    <chunk x="32" y="16" width="16" height="16">
-7,7,7,7,7,10,7,7,7,7,7,7,8,8,8,8,
+7,7,7,7,7,10,7,7,7,7,7,7,17,8,8,8,
 7,7,7,7,7,7,7,7,7,7,7,7,9,8,8,8,
 7,7,7,7,7,7,7,7,7,7,9,7,7,7,7,7,
 6,6,6,6,6,6,7,7,7,7,9,7,7,7,7,7,
@@ -141,19 +154,19 @@
  <layer id="2" name="CollisionLayer" width="32" height="16">
   <data encoding="csv">
    <chunk x="16" y="0" width="16" height="16">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,2,0,0,0,2,2,2,2,2,2,2,2,2,
-0,0,0,2,0,0,0,2,2,2,2,2,2,2,2,2,
 0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,2,0,0,0,2,2,2,2,2,2,2,2,2,
+0,0,0,2,0,0,0,2,2,2,2,2,2,2,2,2,
+0,0,0,2,2,2,2,2,16,0,0,0,0,0,0,0,
 0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0
@@ -168,7 +181,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,
 2,2,2,2,2,2,0,0,0,0,0,0,0,0,2,2,
 2,2,2,2,2,2,0,0,0,0,0,0,0,0,2,2,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -199,9 +212,9 @@
 0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,2,2,2,2,2,2,2,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,2,2,2,2,2,2,2,2,2,2,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -213,13 +226,13 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </chunk>
    <chunk x="32" y="16" width="16" height="16">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,
+0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,
+0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,
+2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -250,16 +263,37 @@
 </chunk>
   </data>
  </layer>
- <objectgroup id="3" name="EntLayer">
-  <object id="1" name="PlayerSpawn" x="704" y="608">
+ <objectgroup id="3" name="EntLayer" visible="0">
+  <object id="1" name="Spawn" type="PlayerSpawn" x="712.5" y="613.5">
    <point/>
   </object>
-  <object id="5" name="EndPoint" x="608" y="224" width="32" height="96"/>
-  <object id="6" x="670" y="544.833" width="210.667" height="27">
-   <text fontfamily="Calibri" wrap="1" color="#ffffff" halign="center" valign="center">Press TAB to go into place mode</text>
+  <object id="5" name="end" type="EndPoint" x="608" y="224" width="32" height="96"/>
+  <object id="6" x="672" y="512" width="210.667" height="35.5">
+   <text fontfamily="Calibri" wrap="1" color="#ffffff" halign="center" valign="center">Press &quot;TAB&quot; to go into place mode!</text>
   </object>
   <object id="8" x="940.667" y="672.833" width="360.667" height="17">
    <text wrap="1" color="#ffffff" halign="center" valign="center">Platforms can only be placed on the sides of walls!</text>
+  </object>
+  <object id="10" name="elevator01" type="Elevator" x="1344" y="320" width="128" height="32">
+   <properties>
+    <property name="destinationObj" type="object" value="13"/>
+    <property name="travelTime" type="float" value="3"/>
+   </properties>
+  </object>
+  <object id="13" name="elevator02" type="ElevatorDestination" x="1216" y="320" width="128" height="32"/>
+  <object id="14" name="button1" type="Button" x="1184" y="288" width="32" height="32">
+   <properties>
+    <property name="triggerOnPressed" type="object" value="10"/>
+   </properties>
+  </object>
+  <object id="15" x="1280" y="224" width="281" height="42.5">
+   <text wrap="1" color="#ffffff" halign="center" valign="center">Move your platform over to the button to Activate it!</text>
+  </object>
+  <object id="18" x="672" y="576" width="210.667" height="27">
+   <text fontfamily="Calibri" wrap="1" color="#ffffff" halign="center" valign="center">Press &quot;F&quot; to recall all platforms!</text>
+  </object>
+  <object id="19" x="736" y="224" width="281" height="42.5">
+   <text wrap="1" color="#ffffff" halign="center" valign="center">Jump into the Portal to move to the next level!</text>
   </object>
  </objectgroup>
 </map>
