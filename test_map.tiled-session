@@ -27,8 +27,8 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1334,
-                "y": 421
+                "x": 42,
+                "y": 7
             }
         },
         "maps/map_1.tmx#dev_tiles": {
@@ -41,6 +41,9 @@
                 "x": 0,
                 "y": 0
             }
+        },
+        "maps/pipe.tsx": {
+            "scaleInDock": 1
         },
         "maps/shit.tmx": {
             "expandedObjectLayers": [
@@ -63,10 +66,10 @@
                 3
             ],
             "scale": 1.5,
-            "selectedLayer": 2,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 1162,
-                "y": 483.33333333333337
+                "x": 746.6666666666665,
+                "y": 356.66666666666663
             }
         },
         "maps/untitled.tmx#dev_tiles": {
@@ -88,8 +91,8 @@
     "property.type": "object",
     "recentFiles": [
         "maps/map_1.tmx",
-        "maps/shit.tmx",
         "maps/untitled.tmx",
+        "maps/shit.tmx",
         "dev_assets/dev_tiles.tsx",
         "maps/min_preset.tmx"
     ],
