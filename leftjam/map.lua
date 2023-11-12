@@ -14,7 +14,7 @@ LeftJam.EndVolume = {}
 LeftJam.ID2Elevator = {}
 LeftJam.Elevators = {}
 LeftJam.Buttons = {}
-
+LeftJam.Text = {}
 
 --[[
     MAP CONFIG HERE
@@ -27,7 +27,6 @@ local mapConfig = {
     },
     ["shit"] = {
         ["song"] = "dizzy-keys-classic-arcade-game-116845.mp3",
-       
         ["backgroundCol"] = {.2, .3, .4}
     },
     ["map_0"] = {
@@ -41,13 +40,6 @@ local mapConfig = {
         ["backgroundCol"] = {.149, 0.254, .149}
     },
 }
-
-
-
-local mapTree = {
-    ["untitled"] = "shit"
-}
-
 
 function LeftJam.GetMapObjectByID(id)
     return LeftJam.CurrMap.objects[id]
@@ -76,9 +68,6 @@ local mapObjectTypes = {
         local travelTime = prop.travelTime
 
         local destObj = LeftJam.GetMapObjectByID(destID)
-        --for k, v in pairs(destObj) do
-        --    print("[" .. k .. "]: " .. tostring(v))
-        --end
 
         LeftJam.Elevators[#LeftJam.Elevators + 1] = {
             ["_isElevator"] = true,
@@ -113,6 +102,7 @@ local mapObjectTypes = {
     end,
     ["Button"] = function(ent)
         local prop = ent.properties
+
         local destID = (prop.TriggerOnPressed or prop.triggerOnPressed).id
         local destObj = LeftJam.GetElevatorByID(destID)
 
@@ -135,6 +125,18 @@ local mapObjectTypes = {
         source = LeftJam.Buttons[#LeftJam.Buttons].sourceSoundNo
         source:setVolume(LeftJam.GlobalAudioLevel)
     end,
+    ["Text"] = function(ent)
+        local message = ent.text
+
+        LeftJam.Text[#LeftJam.Text + 1] = {
+            ["msg"] = message,
+            ["x"] = ent.x,
+            ["y"] = ent.y,
+            ["w"] = ent.width,
+            ["h"] = ent.height,
+        }
+
+    end
 }
 
 local function inrange(a, min, max)
@@ -316,6 +318,7 @@ function LeftJam.LoadMap(name)
 
     LeftJam.Elevators = {}
     LeftJam.Buttons = {}
+    LeftJam.Text = {}
     LeftJam.CurrMapName = name
 
     LeftJam.BumpWorld = bump.newWorld(64) -- this makes A LOT of memory leaks i think since the last one isnt cleaned but no TIME :(
@@ -338,6 +341,8 @@ function LeftJam.LoadMap(name)
     for k, v in pairs(LeftJam.CurrMap.objects) do
         if mapObjectTypes[v.type] then
             mapObjectTypes[v.type](v)
+        elseif v.shape == "text" then
+            mapObjectTypes["Text"](v)
         end
     end
 
@@ -359,7 +364,9 @@ function LeftJam.LoadMap(name)
             end
 
             if v.quad then
-                love.graphics.draw(v.tex, v.quad, math.floor(v.x), math.floor(v.y))
+                local xc = math.floor(v.x) + (v.flipped and v.sizeX or 0)
+                local yc = math.floor(v.y)
+                love.graphics.draw(v.tex, v.quad, xc, yc, 0, v.flipped and -1 or 1, 1)
             else
                 love.graphics.draw(v.tex, math.floor(v.x), math.floor(v.y))
             end
@@ -398,26 +405,40 @@ texElevator:setWrap("repeat")
 
 local quadElevator = love.graphics.newQuad(0, 0, 32, 32, texElevator)
 
-local function renderElevators()
+local function pushCamera()
     local w, h = love.graphics.getDimensions()
     local cx, cy, cz = LeftJam.GetCamParameteri()
-
     love.graphics.push()
         love.graphics.translate(-w * .5, -h * .5)
         love.graphics.scale(cz, cz)
         love.graphics.translate(w * .5, h * .5)
         love.graphics.translate(math.floor(cx), math.floor(cy))
 
-        local tw, th = texElevator:getDimensions()
+
+
+
+end
+
+
+local function renderElevators()
+    pushCamera()
         for k, v in ipairs(LeftJam.Elevators) do
             quadElevator:setViewport(0, 0, v.w, v.h)
 
             love.graphics.setColor(1, 1, 1)
             love.graphics.draw(texElevator, quadElevator, v.x, v.y)
-            --love.graphics.setColor(1, 0, 0)
-            --love.graphics.rectangle("fill", v.x, v.y, v.w, v.h)
         end
 
+    love.graphics.pop()
+end
+
+
+local fontText = love.graphics.newFont("fonts/consola.ttf", 16, "mono", 2)
+local function renderText()
+    pushCamera()
+        for k, v in ipairs(LeftJam.Text) do
+            love.graphics.printf(v.msg, fontText, v.x, v.y, v.w, "center")
+        end
     love.graphics.pop()
 end
 
@@ -440,6 +461,8 @@ function LeftJam.MapDraw()
     love.graphics.setColor(1, 1, 1)
     LeftJam.CurrMap:draw(cx + wd * .5, cy + hd * .5, cz)
     renderElevators()
+
+    renderText()
 
     love.graphics.setColor(1, 1, 1)
     love.graphics.setLineWidth(1)

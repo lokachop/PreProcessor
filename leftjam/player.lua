@@ -219,6 +219,7 @@ LeftJam.NewControllable(TARGET_BODY, {
     ["quad"] = quad_torso,
 
     ["theParent"] = true, -- redundant but cool
+    ["flipped"] = false,
     ["children"] = {},
     ["controlled"] = true,
     ["canMove"] = function(self)
@@ -242,11 +243,13 @@ LeftJam.NewControllable(TARGET_BODY, {
         if love.keyboard.isDown("d") then
             local dadd = math.max(math.min(daddTarget - self.velX, daddMax), -daddMax)
             self.velX = math.min(self.velX + dadd, daddTarget)
+            self.flipped = false
         end
 
         if love.keyboard.isDown("a") then
             local dadd = math.max(math.min(daddTarget - math.abs(self.velX), daddMax), -daddMax)
             self.velX = math.max(self.velX - dadd, -daddTarget)
+            self.flipped = true
         end
 
         if (love.keyboard.isDown("w") or love.keyboard.isDown("space")) and self.grounded then
@@ -429,7 +432,7 @@ LeftJam.NewControllable(TARGET_ARM_LEFT, {
     ["lastDockFlag"] = false,
     ["isGlued"] = false,
     ["cdX"] = 0,
-    ["cdY"] = 12,
+    ["cdY"] = 18,
 
     ["physicsVoid"] = true,
     ["_colourTint"] = {1, 1, 1},
@@ -448,8 +451,8 @@ LeftJam.NewControllable(TARGET_ARM_RIGHT, {
     ["childDocked"] = true,
     ["lastDockFlag"] = false,
     ["isGlued"] = false,
-    ["cdX"] = -2,
-    ["cdY"] = 10,
+    ["cdX"] = 4,
+    ["cdY"] = 16,
 
     ["physicsVoid"] = true,
     ["_colourTint"] = {1, 1, 1},
