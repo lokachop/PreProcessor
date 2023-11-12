@@ -85,7 +85,7 @@
         "maps/shit.tmx"
     ],
     "project": "test_map.tiled-project",
-    "property.type": "float",
+    "property.type": "object",
     "recentFiles": [
         "maps/map_1.tmx",
         "maps/shit.tmx",

@@ -102,7 +102,7 @@ local mapObjectTypes = {
     end,
     ["Button"] = function(ent)
         local prop = ent.properties
-        local destID = prop.TriggerOnPressed.id
+        local destID = (prop.TriggerOnPressed or prop.triggerOnPressed).id
         local destObj = LeftJam.GetElevatorByID(destID)
 
         LeftJam.Buttons[#LeftJam.Buttons + 1] = {

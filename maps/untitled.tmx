@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="16" tilewidth="32" tileheight="32" infinite="1" nextlayerid="5" nextobjectid="12">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="16" tilewidth="32" tileheight="32" infinite="1" nextlayerid="5" nextobjectid="17">
  <editorsettings>
   <export target="untitled.lua" format="lua"/>
  </editorsettings>
@@ -176,7 +176,7 @@
 </chunk>
   </data>
  </layer>
- <objectgroup id="3" name="EntLayer" visible="0">
+ <objectgroup id="3" name="EntLayer">
   <object id="1" name="PlayerSpawn" type="PlayerSpawn" x="736" y="416">
    <point/>
   </object>
@@ -190,7 +190,7 @@
   <object id="7" name="ElvTest1Dest" type="ElevatorDestination" x="544" y="160" width="64" height="32"/>
   <object id="8" name="ButtonElevation" type="Button" x="544" y="256" width="17.3333" height="32">
    <properties>
-    <property name="TriggerOnPressed" type="object" value="6"/>
+    <property name="triggerOnPressed" type="object" value="6"/>
    </properties>
   </object>
   <object id="9" name="ElvTest1" type="Elevator" x="1184" y="352" width="16" height="64">
@@ -205,5 +205,10 @@
     <property name="TriggerOnPressed" type="object" value="9"/>
    </properties>
   </object>
+  <object id="12" x="1031.33" y="394.167" width="80" height="31.6667">
+   <text wrap="1" halign="center" valign="center">Hello LeftArm</text>
+  </object>
+  <object id="15" name="el1" type="Elevator" x="1600" y="288" width="96" height="32"/>
+  <object id="16" name="dest2" type="ElevatorDestination" x="1312" y="320" width="96" height="32"/>
  </objectgroup>
 </map>

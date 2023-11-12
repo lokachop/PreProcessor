@@ -100,7 +100,7 @@ soundLand:setVolume(LeftJam.GlobalAudioLevel)
 
 local daccel = 512
 local stop_val = 1
-local hover_alt = 30.5
+local hover_alt = 28.5
 local function genericPhysics(self, dt) -- applies generic physics movement
     local accelInv = self.velX > 0 and 1 or -1
 

@@ -10,7 +10,7 @@ return {
   tilewidth = 32,
   tileheight = 32,
   nextlayerid = 5,
-  nextobjectid = 12,
+  nextobjectid = 17,
   properties = {},
   tilesets = {
     {
@@ -289,7 +289,7 @@ return {
       id = 3,
       name = "EntLayer",
       class = "",
-      visible = false,
+      visible = true,
       opacity = 1,
       offsetx = 0,
       offsety = 0,
@@ -364,7 +364,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["TriggerOnPressed"] = { id = 6 }
+            ["triggerOnPressed"] = { id = 6 }
           }
         },
         {
@@ -410,6 +410,49 @@ return {
           properties = {
             ["TriggerOnPressed"] = { id = 9 }
           }
+        },
+        {
+          id = 12,
+          name = "",
+          type = "",
+          shape = "text",
+          x = 1031.33,
+          y = 394.167,
+          width = 80,
+          height = 31.6667,
+          rotation = 0,
+          visible = true,
+          text = "Hello LeftArm",
+          wrap = true,
+          halign = "center",
+          valign = "center",
+          properties = {}
+        },
+        {
+          id = 15,
+          name = "el1",
+          type = "Elevator",
+          shape = "rectangle",
+          x = 1600,
+          y = 288,
+          width = 96,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 16,
+          name = "dest2",
+          type = "ElevatorDestination",
+          shape = "rectangle",
+          x = 1312,
+          y = 320,
+          width = 96,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
         }
       }
     }
